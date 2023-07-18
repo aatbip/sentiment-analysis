@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography, getNativeSelectUtilityClasses } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -14,7 +14,9 @@ const ReviewPage = () => {
   const [reviews, setReviews] = useState();
   const [movieInfo, setMovieInfo] = useState(null);
   const [chartData, setChartData] = useState({});
-  
+  const [genres, setGenres] = useState([])
+  const [barChartData, setBarChartData] = useState({});
+
   let positive = 0;
   let negative = 0;
 
@@ -73,20 +75,38 @@ const ReviewPage = () => {
     fetchMovieInfo();
   }, [id]);
 
+  useEffect(() => {
+    const fetchGenres = async () => {
+      try {
+        const {data} = await axios.get(`/genres/`);
+        setGenres(data)
+      } catch (error) {
+        console.error("Error fetching Genres:", error)
+      }
+    };
+
+    fetchGenres();
+  })
+
+
+
+
   return (
     <Box sx={{
       display: 'flex',
       padding: "10px"
     }}>
     <Box sx={{flex: '1 0 60%'}}>
-
-      <Typography variant="h4">Overall Sentiment: {positive > negative ? "POSITIVE" : "NEGATIVE"}</Typography>
-      <Box sx={{ marginTop: '2rem' , width: '20vh', height: '20vh'}}>
+      <Box sx={{ marginTop: '2rem', display: 'flex',flexWrap: 'wrap', marginBottom: '2rem'}}>
+      <Typography variant="h5" sx={{fontWeight: 'bold'}}>Overall Sentiment: {positive > negative ? "POSITIVE" : "NEGATIVE"}</Typography>
+      <Box sx={{ marginTop: '2rem' , width: '15vh', height: '15vh'}}>
           {Object.keys(chartData).length > 0 && (
             <Pie data={chartData} />
             )}
 
-        </Box>
+      </Box>
+
+            </Box>
       <Stack direction="column" rowGap="2rem">
         {
           reviews?.map((el, key) => {
@@ -103,9 +123,10 @@ const ReviewPage = () => {
           alt={movieInfo.title}
           style={{width: '70%', height: '50vh', objectFit: 'fit'}}
         />
+
         <Typography variant='h3'>{movieInfo.title}</Typography>
         <Typography variant='body1'>Date of Release: {movieInfo.date_released}</Typography>
-
+        <Typography variant='body1'>Genre: {genres.filter((genre) => movieInfo.genre.includes(genre.id)).map((genre) => genre.name).join(', ')}</Typography>
         <Typography variant='body1'>Description: {movieInfo.description}</Typography>
       </Box>
     )}
