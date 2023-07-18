@@ -37,11 +37,11 @@ const ReviewPage = () => {
     <Box sx={{
       padding: "10px"
     }}>
-      <Typography variant="h3">Sentiment Pred: {positive > negative ? "POSITIVE" : "NEGATIVE"}</Typography>
+      <Typography variant="h3">Overall Sentiment: {positive > negative ? "POSITIVE" : "NEGATIVE"}</Typography>
       <Stack direction="column" rowGap="2rem">
         {
           reviews?.map((el, key) => {
-            return <MovieList isReview={true} key={key} id={el.id} title={el.critic_name} description={el.content} date_released={el.rating} />
+            return <MovieList isReview={true} key={key} id={el.id} title={el.critic_name} description={el.content} date_released={el.rating} sentimentPred={el.sentiment_pred} />
           })
         }
       </Stack>

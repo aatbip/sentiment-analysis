@@ -2,7 +2,7 @@ import { Box, Typography, Stack } from '@mui/material'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const MovieList = ({ id, title, description, date_released, isReview }) => {
+const MovieList = ({ id, title, description, date_released, isReview,sentimentPred }) => {
   const navigate = useNavigate();
 
   return (
@@ -13,11 +13,17 @@ const MovieList = ({ id, title, description, date_released, isReview }) => {
     }} onClick={() => !isReview && navigate(`/reviews/${id}`)}>
       <Typography variant="h3">{title}</Typography>
       <Typography variant="body2">{description}</Typography>
+
       {
         isReview ?
-          <Typography variant="body1">Rating: {date_released}</Typography> :
+        (
+          <>
+          <Typography variant="body1">Rating: {date_released}</Typography>
+          <Typography variant='body1'>Sentiment Prediction: {sentimentPred}</Typography> 
+          </>):
           <Typography variant="body1">Date of Release: {date_released}</Typography>
       }
+      
     </Stack>
   )
 }
