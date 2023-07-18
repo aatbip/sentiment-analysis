@@ -6,6 +6,7 @@ import MovieList from '../components/MovieList';
 import ReviewList from '../components/ReviewList';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js"
 import {Pie} from 'react-chartjs-2';
+import AddReviewForm from '../components/AddReviewForm';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -128,8 +129,13 @@ const ReviewPage = () => {
         <Typography variant='body1'>Date of Release: {movieInfo.date_released}</Typography>
         <Typography variant='body1'>Genre: {genres.filter((genre) => movieInfo.genre.includes(genre.id)).map((genre) => genre.name).join(', ')}</Typography>
         <Typography variant='body1'>Description: {movieInfo.description}</Typography>
+
+        <Box>
+          <AddReviewForm />
+        </Box>
       </Box>
     )}
+    
     </Box>
   )
 }
