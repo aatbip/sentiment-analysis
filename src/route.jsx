@@ -1,6 +1,7 @@
 import { useRoutes } from "react-router-dom";
 import Homepage from "./pages/Homepage";
 import ReviewPage from "./pages/ReviewPage";
+import RegisterPage from "./pages/RegisterPage";
 
 
 export default function Router() {
@@ -15,6 +16,10 @@ export default function Router() {
         {
           path: "/reviews/:id",
           element: <ReviewPage />
+        },
+        {
+          path: "/register",
+          element: <RegisterPage />
         }
       ]
     }
