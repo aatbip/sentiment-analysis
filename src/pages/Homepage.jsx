@@ -5,7 +5,6 @@ import MovieList from '../components/MovieList';
 
 const Homepage = () => {
   const [movies, setMovies] = useState();
-
   const [filteredMovie, setFilteredMovie] = useState();
 
   useEffect(() => {
@@ -41,7 +40,7 @@ const Homepage = () => {
           {
 
             (filteredMovie ? filteredMovie : movies)?.map((el, key) => {
-              return <MovieList isReview={false} key={key} id={el.id} title={el.title} description={el.description} date_released={el.date_released} />
+              return <MovieList isReview={false} key={key} id={el.id} title={el.title} description={el.description} date_released={el.date_released} smallPosterUrl={el.extra_small_poster_url}/>
             })
           }
         </Stack>
