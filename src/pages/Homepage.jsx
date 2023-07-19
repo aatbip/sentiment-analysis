@@ -5,15 +5,21 @@ import MovieList from '../components/MovieList';
 
 const Homepage = () => {
   const [movies, setMovies] = useState();
-
   const [filteredMovie, setFilteredMovie] = useState();
 
   useEffect(() => {
     (
-      async () => {
-        const { data } = await axios.get("/movies/");
-        setMovies(data)
-      }
+      
+        async () => {
+          try {
+          const { data } = await axios.get("/movies/");
+          setMovies(data)
+        } catch (error) {
+          console.error("Error fetching movies:", error)
+        }
+        }
+      
+      
     )()
 
   }, [])
@@ -41,7 +47,7 @@ const Homepage = () => {
           {
 
             (filteredMovie ? filteredMovie : movies)?.map((el, key) => {
-              return <MovieList isReview={false} key={key} id={el.id} title={el.title} description={el.description} date_released={el.date_released} />
+              return <MovieList key={key} id={el.id} title={el.title} description={el.description} date_released={el.date_released} smallPosterUrl={el.extra_small_poster_url}/>
             })
           }
         </Stack>
